@@ -1,3 +1,4 @@
+require('dotenv').config();
 const mongoose = require('mongoose');
 const Internship = require('./models/Internship');
 const connectDB = require('./config/db');
