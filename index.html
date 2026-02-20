@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InternMatch | Find Your Perfect Internship</title>
+    
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="theme-dark"> <!-- Defaulting to modern dark theme -->
+    <nav class="navbar">
+        <div class="nav-brand">
+            <i class="fa-solid fa-briefcase"></i>
+            <span>InternMatch</span>
+        </div>
+        <div class="nav-controls">
+            <button id="theme-toggle" class="btn-icon" aria-label="Toggle Theme">
+                <i class="fa-regular fa-sun" id="theme-icon"></i>
+            </button>
+        </div>
+    </nav>
+
+    <main class="app-container">
+        
+        <!-- SECTION: LANDING PAGE -->
+        <section id="view-landing" class="view section-active">
+            <div class="landing-content">
+                <div class="badge">🚀 Your Career Starts Here</div>
+                <h1 class="landing-title">Find Internships That <span class="text-gradient">Match Your Skills</span></h1>
+                <p class="landing-subtitle">
+                    A personalized internship discovery platform tailored to your unique stack, preferences, and goals. Stop searching, start matching.
+                </p>
+                <button id="btn-get-started" class="btn btn-primary btn-large">
+                    Get Started <i class="fa-solid fa-arrow-right"></i>
+                </button>
+                
+                <div class="landing-features">
+                    <div class="feature">
+                        <i class="fa-solid fa-bullseye"></i>
+                        <span>Skill-Based Matching</span>
+                    </div>
+                    <div class="feature">
+                        <i class="fa-solid fa-bolt"></i>
+                        <span>Instant Filtering</span>
+                    </div>
+                    <div class="feature">
+                        <i class="fa-solid fa-earth-americas"></i>
+                        <span>Remote & On-site</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="landing-visual">
+                <div class="glass-card decor-card-1">
+                    <div class="decor-header">
+                        <i class="fa-brands fa-react tech-icon text-react"></i>
+                        <span>Frontend Intern</span>
+                    </div>
+                    <div class="decor-body">TechCorp Inc.</div>
+                </div>
+                <div class="glass-card decor-card-2">
+                    <div class="decor-header">
+                        <i class="fa-brands fa-python tech-icon text-python"></i>
+                        <span>Data Science Intern</span>
+                    </div>
+                    <div class="decor-body">Analytics Co.</div>
+                </div>
+                <div class="blob shape-1"></div>
+                <div class="blob shape-2"></div>
+            </div>
+        </section>
+
+        <!-- SECTION: PROFILE SETUP -->
+        <section id="view-profile" class="view">
+            <div class="form-container glass-panel">
+                <div class="form-header">
+                    <h2>Tell us about yourself</h2>
+                    <p>We'll personalize your internship feed based on this info.</p>
+                </div>
+                
+                <form id="profile-form">
+                    <div class="form-group">
+                        <label for="user-name">Your Name</label>
+                        <input type="text" id="user-name" placeholder="e.g. Alex Doe" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Preferred Domain</label>
+                        <select id="user-domain" required>
+                            <option value="" disabled selected>Select a domain</option>
+                            <option value="Web Development">Web Development</option>
+                            <option value="App Development">App Development</option>
+                            <option value="Data Science">Data Science</option>
+                            <option value="Machine Learning">Machine Learning</option>
+                            <option value="Core Engineering">Core Engineering</option>
+                            <option value="Finance">Finance</option>
+                            <option value="Marketing">Marketing</option>
+                            <option value="UI/UX Design">UI/UX Design</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Your Skills</label>
+                        <div class="skills-grid" id="skills-container">
+                            <!-- Populated by JS -->
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Work Preference</label>
+                        <div class="radio-group" id="preference-container">
+                            <label class="radio-card">
+                                <input type="radio" name="work_pref" value="Remote" required>
+                                <span class="radio-content">
+                                    <i class="fa-solid fa-house-laptop"></i>
+                                    Remote
+                                </span>
+                            </label>
+                            <label class="radio-card">
+                                <input type="radio" name="work_pref" value="On-site">
+                                <span class="radio-content">
+                                    <i class="fa-solid fa-building"></i>
+                                    On-site
+                                </span>
+                            </label>
+                            <label class="radio-card">
+                                <input type="radio" name="work_pref" value="Hybrid">
+                                <span class="radio-content">
+                                    <i class="fa-solid fa-building-user"></i>
+                                    Hybrid
+                                </span>
+                            </label>
+                            <label class="radio-card">
+                                <input type="radio" name="work_pref" value="Any" checked>
+                                <span class="radio-content">
+                                    <i class="fa-solid fa-globe"></i>
+                                    Any
+                                </span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary btn-block">
+                            Find Matches <i class="fa-solid fa-wand-magic-sparkles"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <!-- SECTION: DASHBOARD -->
+        <section id="view-dashboard" class="view">
+            <div class="dashboard-layout">
+                <aside class="dashboard-sidebar glass-panel">
+                    <div class="user-profile-summary">
+                        <div class="avatar"><i class="fa-regular fa-user"></i></div>
+                        <div class="user-info">
+                            <h3 id="display-name">Alex Doe</h3>
+                            <p id="display-domain" class="text-muted">Web Development</p>
+                        </div>
+                        <button id="btn-edit-profile" class="btn-icon subtle" title="Edit Profile">
+                            <i class="fa-solid fa-pen"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="filter-section">
+                        <h4>Active Filters</h4>
+                        <div class="active-filters">
+                            <span class="chip chip-pref" id="chip-pref">Any</span>
+                        </div>
+                        <div class="active-filters" id="chip-skills">
+                            <!-- Chips injected here -->
+                        </div>
+                    </div>
+                </aside>
+                
+                <div class="dashboard-main">
+                    <div class="dashboard-header">
+                        <h2>Your Matches</h2>
+                        <span class="match-count">Found <strong id="match-count-num">0</strong> internships</span>
+                    </div>
+                    
+                    <div class="internships-grid" id="internships-container">
+                        <!-- Cards injected by JS -->
+                    </div>
+                    
+                    <div id="no-results" class="empty-state hidden">
+                        <i class="fa-solid fa-magnifying-glass-slash empty-icon"></i>
+                        <h3>No perfect matches found</h3>
+                        <p>Try adjusting your skills or work preference.</p>
+                        <button id="btn-reset-filters" class="btn btn-outline mt-4">Edit Profile</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script src="data.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
