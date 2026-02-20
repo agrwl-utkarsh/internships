@@ -1,15 +1,69 @@
 const mongoose = require('mongoose');
+const bcrypt = require('bcryptjs');
 
 const userSchema = new mongoose.Schema({
-    uuid: { type: String, required: true, unique: true }, // Simple auth: we'll use a local UUID for MVP
-    name: { type: String, required: true },
-    domain: { type: String, required: true },
-    skills: { type: [String], default: [] },
-    preference: { type: String, default: 'Any' },
-    savedInternships: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Internship' }]
-}, {
-    timestamps: true
+    name: {
+        type: String,
+        required: true,
+        trim: true
+    },
+    email: {
+        type: String,
+        required: true,
+        unique: true,
+        trim: true,
+        lowercase: true
+    },
+    password: {
+        type: String,
+        required: true,
+        minlength: 6
+    },
+    domain: {
+        type: String,
+        required: true
+    },
+    skills: [{
+        type: String
+    }],
+    preference: {
+        type: String,
+        enum: ['Remote', 'On-site', 'Hybrid', 'Any'],
+        default: 'Any'
+    },
+    savedInternships: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Internship'
+    }],
+    createdAt: {
+        type: Date,
+        default: Date.now
+    }
 });
 
-const User = mongoose.model('User', userSchema);
-module.exports = User;
+// Setup pre-save hook to hash password
+userSchema.pre('save', async function(next) {
+    if (!this.isModified('password')) return next();
+    
+    try {
+        const salt = await bcrypt.genSalt(10);
+        this.password = await bcrypt.hash(this.password, salt);
+        next();
+    } catch (error) {
+        next(error);
+    }
+});
+
+// Method to compare passwords
+userSchema.methods.comparePassword = async function(candidatePassword) {
+    return await bcrypt.compare(candidatePassword, this.password);
+};
+
+// Method to remove sensitive info before sending to client
+userSchema.methods.toJSON = function() {
+    const user = this.toObject();
+    delete user.password;
+    return user;
+};
+
+module.exports = mongoose.model('User', userSchema);

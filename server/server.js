@@ -18,6 +18,7 @@ app.use(cors());
 app.use(express.json()); // Parses incoming JSON requests
 
 // Routes
+app.use('/api/auth', require('./routes/auth'));
 app.use('/api', apiRoutes);
 
 // Basic health check
