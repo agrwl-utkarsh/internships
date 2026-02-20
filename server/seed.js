@@ -1,9 +1,14 @@
 require('dotenv').config();
+const dns = require('dns');
+// Force Google DNS to resolve SRV records (fixes IPv6-only DNS servers)
+dns.setDefaultResultOrder('ipv4first');
+dns.setServers(['8.8.8.8', '8.8.4.4']);
+
 const mongoose = require('mongoose');
 const Internship = require('./models/Internship');
 const connectDB = require('./config/db');
 
-// The original mock data expanded
+// ... rest of seed code
 const internshipsData = [
     {
         company: "TechNova",
@@ -15,7 +20,7 @@ const internshipsData = [
         deadline: new Date("2026-11-30"),
         logoColor: "#61dafb",
         logoText: "TN",
-        postedAt: new Date(Date.now() - 10 * 60 * 60 * 1000) // 10 hours ago -> "New"
+        postedAt: new Date(Date.now() - 10 * 60 * 60 * 1000)
     },
     {
         company: "DataSphere",
@@ -27,7 +32,7 @@ const internshipsData = [
         deadline: new Date("2026-12-15"),
         logoColor: "#3776ab",
         logoText: "DS",
-        postedAt: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000) // 3 days ago -> Not new
+        postedAt: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000)
     },
     {
         company: "MobileFirst",
@@ -39,7 +44,7 @@ const internshipsData = [
         deadline: new Date("2026-11-20"),
         logoColor: "#f05138",
         logoText: "MF",
-        postedAt: new Date(Date.now() - 24 * 60 * 60 * 1000) // 24 hours ago -> "New"
+        postedAt: new Date(Date.now() - 24 * 60 * 60 * 1000)
     },
     {
         company: "CloudCore",
@@ -63,7 +68,7 @@ const internshipsData = [
         deadline: new Date("2026-11-25"),
         logoColor: "#f24e1e",
         logoText: "DH",
-        postedAt: new Date(Date.now() - 2 * 60 * 60 * 1000) // 2 hours ago -> "New"
+        postedAt: new Date(Date.now() - 2 * 60 * 60 * 1000)
     },
     {
         company: "AlgoTrader",
@@ -135,7 +140,7 @@ const internshipsData = [
         deadline: new Date("2026-12-05"),
         logoColor: "#3ddc84",
         logoText: "AW",
-        postedAt: new Date(Date.now() - 20 * 60 * 60 * 1000) // 20 hours ago -> "New"
+        postedAt: new Date(Date.now() - 20 * 60 * 60 * 1000)
     },
     {
         company: "PixelPerfect",
@@ -149,7 +154,6 @@ const internshipsData = [
         logoText: "PP",
         postedAt: new Date()
     },
-    // Adding a few more to flesh out the DB
     {
         company: "FinTech Sol",
         role: "Blockchain Dev Intern",
@@ -172,7 +176,7 @@ const internshipsData = [
         deadline: new Date("2026-11-28"),
         logoColor: "#ff0000",
         logoText: "CC",
-        postedAt: new Date(Date.now() - 40 * 60 * 60 * 1000) // 40 hours ago
+        postedAt: new Date(Date.now() - 40 * 60 * 60 * 1000)
     },
     {
         company: "CyberShield",
@@ -191,18 +195,13 @@ const internshipsData = [
 const seedDB = async () => {
     try {
         await connectDB();
-
-        // Clear existing data
         await Internship.deleteMany({});
         console.log('Cleared existing internships.');
-
-        // Insert mock data
         await Internship.insertMany(internshipsData);
-        console.log('Database seeded with internships successfully!');
-
+        console.log(`✅ Database seeded with ${internshipsData.length} internships!`);
         process.exit();
     } catch (error) {
-        console.error(`Error with data import: ${error.message}`);
+        console.error(`❌ Error: ${error.message}`);
         process.exit(1);
     }
 };
